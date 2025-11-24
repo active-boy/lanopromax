@@ -40,17 +40,16 @@
             background-color: var(--bg-color);
             color: var(--text-color);
             min-height: 100vh;
-            padding: 15px;
-            font-size: 14px;
+            padding: 20px;
         }
         
         .container {
             max-width: 1400px;
             margin: 0 auto;
-            padding: 15px;
+            padding: 20px;
         }
         
-        /* 登录/注册界面 */
+        /* 认证界面 */
         .auth-container {
             display: flex;
             justify-content: center;
@@ -122,8 +121,8 @@
         
         header {
             text-align: center;
-            margin-bottom: 20px;
-            padding: 15px;
+            margin-bottom: 30px;
+            padding: 20px;
             background: var(--sidebar-bg);
             border-radius: var(--border-radius);
             box-shadow: var(--shadow);
@@ -133,11 +132,16 @@
         }
         
         h1 {
-            font-size: 2rem;
-            margin-bottom: 5px;
+            font-size: 2.5rem;
+            margin-bottom: 10px;
             background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
+        }
+        
+        .subtitle {
+            color: #888;
+            font-size: 1.1rem;
         }
         
         .user-info {
@@ -160,7 +164,7 @@
         
         .app-container {
             display: flex;
-            gap: 15px;
+            gap: 20px;
             min-height: 600px;
         }
         
@@ -168,7 +172,7 @@
             flex: 1;
             background: var(--sidebar-bg);
             border-radius: var(--border-radius);
-            padding: 15px;
+            padding: 20px;
             box-shadow: var(--shadow);
             display: flex;
             flex-direction: column;
@@ -179,7 +183,7 @@
             flex: 2;
             background: var(--sidebar-bg);
             border-radius: var(--border-radius);
-            padding: 15px;
+            padding: 20px;
             box-shadow: var(--shadow);
             display: flex;
             flex-direction: column;
@@ -188,27 +192,26 @@
         .notes-list {
             flex: 1;
             overflow-y: auto;
-            max-height: 300px;
-            margin-bottom: 10px;
+            max-height: 400px;
+            margin-bottom: 15px;
         }
         
         .note-item {
-            padding: 10px 12px;
-            margin-bottom: 8px;
+            padding: 12px 15px;
+            margin-bottom: 10px;
             background: rgba(0, 0, 0, 0.05);
-            border-radius: 6px;
+            border-radius: 8px;
             cursor: pointer;
             transition: all 0.3s ease;
             display: flex;
             justify-content: space-between;
             align-items: center;
             border-left: 3px solid transparent;
-            font-size: 0.9rem;
         }
         
         .note-item:hover {
             background: rgba(0, 0, 0, 0.1);
-            transform: translateX(3px);
+            transform: translateX(5px);
         }
         
         .note-item.active {
@@ -225,19 +228,17 @@
         }
         
         .note-date {
-            font-size: 0.75rem;
+            font-size: 0.8rem;
             color: #888;
         }
         
         .btn {
-            padding: 8px 15px;
+            padding: 10px 20px;
             border: none;
             border-radius: 5px;
             cursor: pointer;
             font-weight: 600;
             transition: all 0.3s ease;
-            margin: 3px;
-            font-size: 0.85rem;
         }
         
         .btn-primary {
@@ -268,19 +269,10 @@
             background: #e01e75;
         }
         
-        .btn-success {
-            background: var(--success-color);
-            color: white;
-        }
-        
-        .btn-success:hover {
-            background: #3aa9d4;
-        }
-        
         .controls {
             display: flex;
-            gap: 8px;
-            margin-bottom: 15px;
+            gap: 10px;
+            margin-bottom: 20px;
             flex-wrap: wrap;
         }
         
@@ -294,15 +286,15 @@
             background: var(--editor-bg);
             border: 1px solid var(--border-color);
             border-radius: 5px;
-            padding: 10px 12px;
+            padding: 12px 15px;
             color: var(--text-color);
-            font-size: 1.1rem;
-            margin-bottom: 12px;
+            font-size: 1.2rem;
+            margin-bottom: 15px;
         }
         
         .editor-container {
             display: flex;
-            gap: 12px;
+            gap: 15px;
             flex: 1;
         }
         
@@ -311,10 +303,10 @@
             background: var(--editor-bg);
             border: 1px solid var(--border-color);
             border-radius: 5px;
-            padding: 12px;
+            padding: 15px;
             color: var(--text-color);
             resize: none;
-            font-size: 0.9rem;
+            font-size: 1rem;
             line-height: 1.5;
             font-family: 'Courier New', monospace;
         }
@@ -324,70 +316,49 @@
             background: var(--editor-bg);
             border: 1px solid var(--border-color);
             border-radius: 5px;
-            padding: 12px;
+            padding: 15px;
             color: var(--text-color);
             overflow-y: auto;
-            font-size: 0.9rem;
+            font-size: 1rem;
             line-height: 1.5;
         }
         
         .empty-state {
             text-align: center;
-            padding: 30px 15px;
+            padding: 40px 20px;
             color: #888;
         }
         
         .empty-state h3 {
-            margin-bottom: 8px;
-            color: #aaa;
-            font-size: 1.1rem;
-        }
-        
-        .data-management {
-            margin-top: 15px;
-            padding: 15px;
-            background: rgba(0, 0, 0, 0.05);
-            border-radius: 8px;
-        }
-        
-        .data-management h3 {
             margin-bottom: 10px;
-            color: var(--primary-color);
-        }
-        
-        .data-buttons {
-            display: flex;
-            gap: 10px;
-            flex-wrap: wrap;
+            color: #aaa;
         }
         
         .search-box {
             width: 100%;
-            padding: 8px 12px;
+            padding: 10px 15px;
             background: var(--editor-bg);
             border: 1px solid var(--border-color);
             border-radius: 5px;
             color: var(--text-color);
-            margin-bottom: 12px;
-            font-size: 0.85rem;
+            margin-bottom: 15px;
         }
         
         .mode-controls {
             display: flex;
-            gap: 8px;
-            margin-bottom: 12px;
+            gap: 10px;
+            margin-bottom: 15px;
         }
         
         .mode-btn {
             flex: 1;
-            padding: 6px 12px;
+            padding: 8px 15px;
             border: 1px solid var(--border-color);
             background: var(--editor-bg);
             color: var(--text-color);
             border-radius: 5px;
             cursor: pointer;
             transition: all 0.3s;
-            font-size: 0.8rem;
         }
         
         .mode-btn.active {
@@ -401,21 +372,21 @@
             border: 1px solid var(--border-color);
             color: var(--text-color);
             border-radius: 50%;
-            width: 36px;
-            height: 36px;
+            width: 40px;
+            height: 40px;
             display: flex;
             align-items: center;
             justify-content: center;
             cursor: pointer;
-            font-size: 1.1rem;
+            font-size: 1.2rem;
         }
         
         footer {
             text-align: center;
-            margin-top: 20px;
-            padding: 15px;
+            margin-top: 30px;
+            padding: 20px;
             color: #666;
-            font-size: 0.8rem;
+            font-size: 0.9rem;
         }
         
         @media (max-width: 768px) {
@@ -429,7 +400,7 @@
             
             .editor-container {
                 flex-direction: column;
-                min-height: 300px;
+                min-height: 400px;
             }
             
             .note-content, .note-preview {
@@ -442,10 +413,6 @@
             
             .btn {
                 width: 100%;
-            }
-            
-            .data-buttons {
-                flex-direction: column;
             }
         }
     </style>
@@ -463,9 +430,11 @@
         };
     </script>
     <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+    <!-- 引入Supabase -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
 </head>
 <body>
-    <!-- 登录/注册界面 -->
+    <!-- 认证界面 -->
     <div id="authInterface" class="auth-container">
         <div class="auth-box">
             <div class="auth-tabs">
@@ -496,14 +465,10 @@
                 </div>
                 <div class="form-group">
                     <label class="form-label" for="registerPassword">密码</label>
-                    <input type="password" id="registerPassword" class="form-input" required>
+                    <input type="password" id="registerPassword" class="form-input" required minlength="6">
                 </div>
                 <button type="submit" class="btn btn-primary" style="width: 100%;">注册</button>
             </form>
-            
-            <div style="text-align: center; margin-top: 15px;">
-                <p>或 <a href="#" id="guestLogin">以访客身份继续</a></p>
-            </div>
         </div>
     </div>
     
@@ -519,9 +484,9 @@
                     <div class="user-avatar" id="userAvatar">U</div>
                     <div>
                         <div id="userName">用户</div>
-                        <button id="logoutBtn" class="btn btn-secondary" style="padding: 5px 10px; font-size: 0.7rem;">退出</button>
+                        <button id="logoutBtn" class="btn btn-secondary">退出</button>
                     </div>
-                    <button id="themeToggle" class="theme-toggle" title="切换主题">🌓</button>
+                    <button id="themeToggle" class="theme-toggle">🌓</button>
                 </div>
             </header>
             
@@ -540,15 +505,6 @@
                             <p>点击"新建笔记"开始记录</p>
                         </div>
                     </div>
-                    
-                    <div class="data-management">
-                        <h3>数据管理</h3>
-                        <div class="data-buttons">
-                            <button id="exportBtn" class="btn btn-success">导出笔记</button>
-                            <button id="importBtn" class="btn btn-secondary">导入笔记</button>
-                            <input type="file" id="importFile" accept=".json" style="display: none;">
-                        </div>
-                    </div>
                 </div>
                 
                 <div class="main-content">
@@ -559,10 +515,10 @@
                             <button id="modePreview" class="mode-btn">纯预览</button>
                         </div>
                         
-                        <input type="text" id="noteTitle" class="note-title-input" placeholder="笔记标题 (将自动从第一行提取)">
+                        <input type="text" id="noteTitle" class="note-title-input" placeholder="笔记标题">
                         
                         <div class="editor-container">
-                            <textarea id="noteContent" class="note-content" placeholder="开始输入您的笔记内容...支持LaTeX公式，使用$...$包裹。第一行将自动提取为标题。"></textarea>
+                            <textarea id="noteContent" class="note-content" placeholder="开始输入您的笔记内容...支持LaTeX公式，使用$...$包裹"></textarea>
                             <div id="notePreview" class="note-preview">
                                 <div class="empty-state">
                                     <h3>预览区域</h3>
@@ -571,57 +527,68 @@
                             </div>
                         </div>
                         
-                        <div style="margin-top: 12px; text-align: right;">
+                        <div style="margin-top: 15px; text-align: right;">
                             <button id="saveNoteBtn" class="btn btn-primary">保存笔记</button>
-                            <span id="modifiedIndicator" style="display:none;" class="modified-indicator" title="有未保存的修改"></span>
                         </div>
                     </div>
                 </div>
             </div>
             
             <footer>
-                <p>您的笔记存储在浏览器本地，支持未来云端同步功能</p>
+                <p>您的笔记存储在云端，可在任何设备访问</p>
             </footer>
         </div>
     </div>
 
     <script>
-        // 云端笔记应用类
-        class LanoPlusCloud {
+        // 初始化Supabase客户端
+        const supabaseUrl = 'https://nojqetousnoqhhxpdmhf.supabase.co';
+        const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im5vanFldG91c25vcWhoeHBkbWhmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjM5ODIzMjQsImV4cCI6MjA3OTU1ODMyNH0.7BxwiQ5n-v19dp-tgkrH9mJuzqSno_b975l7VqvNOs8';
+        const supabase = window.supabase.createClient(supabaseUrl, supabaseKey);
+        
+        // 笔记管理类
+        class LanoPlusNotes {
             constructor() {
                 this.notes = [];
                 this.currentNoteId = null;
                 this.currentMode = 'split';
                 this.isDarkMode = false;
-                this.isModified = false;
-                this.originalContent = '';
-                this.originalTitle = '';
                 this.currentUser = null;
                 
                 this.init();
             }
             
             // 初始化应用
-            init() {
-                this.checkAuthStatus();
+            async init() {
+                await this.checkAuthStatus();
                 this.setupEventListeners();
+                this.updateNotesList();
+                this.applyMode(this.currentMode);
             }
             
             // 检查认证状态
-            checkAuthStatus() {
-                // 检查是否有已登录用户
-                const savedUser = localStorage.getItem('lanoPlusUser');
-                if (savedUser) {
-                    try {
-                        this.currentUser = JSON.parse(savedUser);
-                        this.showAppInterface();
-                    } catch (e) {
-                        console.error('解析用户数据失败:', e);
-                        this.showAuthInterface();
-                    }
+            async checkAuthStatus() {
+                const { data: { session } } = await supabase.auth.getSession();
+                
+                if (session) {
+                    this.currentUser = session.user;
+                    this.showAppInterface();
+                    await this.loadNotes();
                 } else {
                     this.showAuthInterface();
                 }
+                
+                // 监听认证状态变化
+                supabase.auth.onAuthStateChange((event, session) => {
+                    if (event === 'SIGNED_IN' && session) {
+                        this.currentUser = session.user;
+                        this.showAppInterface();
+                        this.loadNotes();
+                    } else if (event === 'SIGNED_OUT') {
+                        this.currentUser = null;
+                        this.showAuthInterface();
+                    }
+                });
             }
             
             // 显示认证界面
@@ -634,14 +601,7 @@
             showAppInterface() {
                 document.getElementById('authInterface').style.display = 'none';
                 document.getElementById('appInterface').style.display = 'block';
-                
-                // 更新用户信息
                 this.updateUserInfo();
-                
-                // 加载用户的笔记
-                this.loadNotes();
-                this.updateNotesList();
-                this.applyMode(this.currentMode);
             }
             
             // 更新用户信息显示
@@ -650,156 +610,335 @@
                     const avatar = document.getElementById('userAvatar');
                     const name = document.getElementById('userName');
                     
-                    // 设置用户头像（使用用户名首字母）
-                    avatar.textContent = this.currentUser.name ? this.currentUser.name.charAt(0).toUpperCase() : 'U';
-                    name.textContent = this.currentUser.name || '用户';
-                    
-                    // 设置用户特定的存储键
-                    this.userStorageKey = `lanoPlusNotes_${this.currentUser.id}`;
+                    avatar.textContent = this.currentUser.user_metadata?.name?.charAt(0) || 'U';
+                    name.textContent = this.currentUser.user_metadata?.name || '用户';
                 }
             }
             
             // 用户注册
             async registerUser(name, email, password) {
-                // 模拟注册过程
-                // 在实际应用中，这里应该调用后端API
-                
-                // 检查邮箱是否已存在
-                const users = JSON.parse(localStorage.getItem('lanoPlusUsers') || '[]');
-                const existingUser = users.find(user => user.email === email);
-                
-                if (existingUser) {
-                    throw new Error('该邮箱已被注册');
+                try {
+                    const { data, error } = await supabase.auth.signUp({
+                        email: email,
+                        password: password,
+                        options: {
+                            data: {
+                                name: name
+                            }
+                        }
+                    });
+                    
+                    if (error) throw error;
+                    
+                    if (data.user) {
+                        alert('注册成功！请检查您的邮箱验证账户。');
+                        this.currentUser = data.user;
+                        this.showAppInterface();
+                        return data.user;
+                    }
+                } catch (error) {
+                    alert(`注册失败: ${error.message}`);
+                    throw error;
                 }
-                
-                // 创建新用户
-                const newUser = {
-                    id: Date.now().toString(),
-                    name: name,
-                    email: email,
-                    // 注意：在实际应用中，密码应该加密存储
-                    password: password,
-                    createdAt: new Date().toISOString()
-                };
-                
-                users.push(newUser);
-                localStorage.setItem('lanoPlusUsers', JSON.stringify(users));
-                
-                // 自动登录
-                this.currentUser = { id: newUser.id, name: newUser.name, email: newUser.email };
-                localStorage.setItem('lanoPlusUser', JSON.stringify(this.currentUser));
-                
-                return newUser;
             }
             
             // 用户登录
             async loginUser(email, password) {
-                // 模拟登录过程
-                // 在实际应用中，这里应该调用后端API
-                
-                const users = JSON.parse(localStorage.getItem('lanoPlusUsers') || '[]');
-                const user = users.find(u => u.email === email && u.password === password);
-                
-                if (!user) {
-                    throw new Error('邮箱或密码错误');
+                try {
+                    const { data, error } = await supabase.auth.signInWithPassword({
+                        email: email,
+                        password: password
+                    });
+                    
+                    if (error) throw error;
+                    
+                    this.currentUser = data.user;
+                    this.showAppInterface();
+                    await this.loadNotes();
+                    
+                    return data.user;
+                } catch (error) {
+                    alert(`登录失败: ${error.message}`);
+                    throw error;
                 }
-                
-                this.currentUser = { id: user.id, name: user.name, email: user.email };
-                localStorage.setItem('lanoPlusUser', JSON.stringify(this.currentUser));
-                
-                return user;
             }
             
-            // 访客登录
-            guestLogin() {
-                this.currentUser = {
-                    id: 'guest',
-                    name: '访客用户',
-                    email: 'guest@example.com'
-                };
-                localStorage.setItem('lanoPlusUser', JSON.stringify(this.currentUser));
-                this.showAppInterface();
-            }
-            
-            // 用户退出
-            logout() {
-                if (confirm('确定要退出登录吗？')) {
+            // 退出登录
+            async logout() {
+                try {
+                    const { error } = await supabase.auth.signOut();
+                    if (error) throw error;
+                    
                     this.currentUser = null;
-                    localStorage.removeItem('lanoPlusUser');
+                    this.notes = [];
                     this.showAuthInterface();
+                } catch (error) {
+                    alert(`退出失败: ${error.message}`);
                 }
             }
             
-            // 从本地存储加载笔记
-            loadNotes() {
+            // 从Supabase加载笔记
+            async loadNotes() {
                 if (!this.currentUser) return;
                 
-                const savedNotes = localStorage.getItem(this.userStorageKey);
+                try {
+                    const { data, error } = await supabase
+                        .from('notes')
+                        .select('*')
+                        .eq('user_id', this.currentUser.id)
+                        .order('updated_at', { ascending: false });
+                    
+                    if (error) throw error;
+                    
+                    this.notes = data || [];
+                    this.updateNotesList();
+                } catch (error) {
+                    console.error('加载笔记失败:', error);
+                    this.notes = [];
+                }
+            }
+            
+            // 保存笔记到Supabase
+            async saveNote(note) {
+                if (!this.currentUser) return null;
                 
-                if (savedNotes) {
+                try {
+                    // 如果笔记有ID，则更新，否则创建新笔记
+                    if (note.id) {
+                        const { data, error } = await supabase
+                            .from('notes')
+                            .update({
+                                title: note.title,
+                                content: note.content,
+                                updated_at: new Date().toISOString()
+                            })
+                            .eq('id', note.id)
+                            .select();
+                        
+                        if (error) throw error;
+                        return data[0];
+                    } else {
+                        const { data, error } = await supabase
+                            .from('notes')
+                            .insert({
+                                title: note.title,
+                                content: note.content,
+                                user_id: this.currentUser.id,
+                                created_at: new Date().toISOString(),
+                                updated_at: new Date().toISOString()
+                            })
+                            .select();
+                        
+                        if (error) throw error;
+                        return data[0];
+                    }
+                } catch (error) {
+                    console.error('保存笔记失败:', error);
+                    alert('保存失败，请检查网络连接');
+                    throw error;
+                }
+            }
+            
+            // 创建新笔记
+            async createNote() {
+                const newNote = {
+                    id: null,
+                    title: '新笔记',
+                    content: '',
+                    created_at: new Date().toISOString(),
+                    updated_at: new Date().toISOString()
+                };
+                
+                try {
+                    const savedNote = await this.saveNote(newNote);
+                    if (savedNote) {
+                        this.notes.unshift(savedNote);
+                        this.currentNoteId = savedNote.id;
+                        this.updateNotesList();
+                        this.displayNote(savedNote.id);
+                    }
+                } catch (error) {
+                    console.error('创建笔记失败:', error);
+                }
+            }
+            
+            // 删除笔记
+            async deleteNote(id) {
+                if (confirm('确定要删除此笔记吗？此操作不可撤销。')) {
                     try {
-                        this.notes = JSON.parse(savedNotes);
-                    } catch (e) {
-                        console.error('加载笔记失败:', e);
-                        this.notes = [];
+                        const { error } = await supabase
+                            .from('notes')
+                            .delete()
+                            .eq('id', id);
+                        
+                        if (error) throw error;
+                        
+                        this.notes = this.notes.filter(note => note.id !== id);
+                        if (this.currentNoteId === id) {
+                            this.currentNoteId = null;
+                            this.clearEditor();
+                        }
+                        this.updateNotesList();
+                    } catch (error) {
+                        alert('删除失败，请重试');
                     }
                 }
             }
             
-            // 保存笔记到本地存储
-            saveNotes() {
-                if (!this.currentUser) return;
-                
-                localStorage.setItem(this.userStorageKey, JSON.stringify(this.notes));
+            // 显示笔记内容
+            displayNote(id) {
+                const note = this.notes.find(note => note.id === id);
+                if (note) {
+                    document.getElementById('noteTitle').value = note.title;
+                    document.getElementById('noteContent').value = note.content;
+                    this.currentNoteId = id;
+                    
+                    // 更新笔记列表中的活动状态
+                    document.querySelectorAll('.note-item').forEach(item => {
+                        item.classList.remove('active');
+                        if (item.dataset.id === id) {
+                            item.classList.add('active');
+                        }
+                    });
+                    
+                    this.updatePreview();
+                }
             }
             
-            // 导出笔记为JSON文件
-            exportNotes() {
-                if (this.notes.length === 0) {
-                    alert('没有可导出的笔记');
+            // 清空编辑器
+            clearEditor() {
+                document.getElementById('noteTitle').value = '';
+                document.getElementById('noteContent').value = '';
+                this.currentNoteId = null;
+                document.getElementById('notePreview').innerHTML = '<div class="empty-state"><h3>预览区域</h3><p>输入内容后，将在这里实时预览</p></div>';
+                
+                // 移除所有活动状态
+                document.querySelectorAll('.note-item').forEach(item => {
+                    item.classList.remove('active');
+                });
+            }
+            
+            // 更新笔记列表显示
+            updateNotesList() {
+                const notesList = document.getElementById('notesList');
+                const searchTerm = document.getElementById('searchBox').value.toLowerCase();
+                
+                // 过滤笔记
+                const filteredNotes = this.notes.filter(note => 
+                    note.title.toLowerCase().includes(searchTerm) || 
+                    note.content.toLowerCase().includes(searchTerm)
+                );
+                
+                notesList.innerHTML = '';
+                
+                if (filteredNotes.length === 0) {
+                    if (this.notes.length === 0) {
+                        notesList.innerHTML = '<div class="empty-state"><h3>暂无笔记</h3><p>点击"新建笔记"开始记录</p></div>';
+                    } else {
+                        notesList.innerHTML = '<div class="empty-state"><h3>未找到匹配的笔记</h3><p>尝试使用其他搜索词</p></div>';
+                    }
                     return;
                 }
                 
-                const dataStr = JSON.stringify(this.notes, null, 2);
-                const dataBlob = new Blob([dataStr], {type: 'application/json'});
-                
-                const url = URL.createObjectURL(dataBlob);
-                const link = document.createElement('a');
-                link.href = url;
-                link.download = `lano-plus-notes-${new Date().toISOString().split('T')[0]}.json`;
-                document.body.appendChild(link);
-                link.click();
-                document.body.removeChild(link);
-                URL.revokeObjectURL(url);
-                
-                alert('笔记导出成功！');
+                filteredNotes.forEach(note => {
+                    const noteElement = document.createElement('div');
+                    noteElement.className = `note-item ${this.currentNoteId === note.id ? 'active' : ''}`;
+                    noteElement.dataset.id = note.id;
+                    
+                    const date = new Date(note.updated_at);
+                    const formattedDate = `${date.getMonth()+1}/${date.getDate()} ${date.getHours()}:${date.getMinutes().toString().padStart(2, '0')}`;
+                    
+                    noteElement.innerHTML = `
+                        <div class="note-title">${note.title || '无标题'}</div>
+                        <div class="note-date">${formattedDate}</div>
+                    `;
+                    
+                    noteElement.addEventListener('click', () => {
+                        this.displayNote(note.id);
+                    });
+                    
+                    notesList.appendChild(noteElement);
+                });
             }
             
-            // 导入笔记从JSON文件
-            importNotes(file) {
-                const reader = new FileReader();
+            // 更新预览区域
+            updatePreview() {
+                const content = document.getElementById('noteContent').value;
+                const previewElement = document.getElementById('notePreview');
                 
-                reader.onload = (e) => {
-                    try {
-                        const importedNotes = JSON.parse(e.target.result);
-                        
-                        if (!Array.isArray(importedNotes)) {
-                            throw new Error('文件格式不正确');
-                        }
-                        
-                        if (confirm(`确定要导入 ${importedNotes.length} 条笔记吗？这将覆盖您当前的笔记。`)) {
-                            this.notes = importedNotes;
-                            this.saveNotes();
-                            this.updateNotesList();
-                            alert('笔记导入成功！');
-                        }
-                    } catch (error) {
-                        alert('导入失败：文件格式不正确');
-                        console.error('导入错误:', error);
-                    }
-                };
+                if (content.trim() === '') {
+                    previewElement.innerHTML = '<div class="empty-state"><h3>预览区域</h3><p>输入内容后，将在这里实时预览</p></div>';
+                    return;
+                }
                 
-                reader.readAsText(file);
+                // 将内容中的换行转换为HTML换行
+                let htmlContent = content.replace(/\n/g, '<br>');
+                
+                previewElement.innerHTML = htmlContent;
+                
+                // 重新渲染MathJax
+                if (window.MathJax) {
+                    MathJax.typesetPromise([previewElement]).then(() => {
+                        console.log('MathJax渲染完成');
+                    }).catch(err => console.log('MathJax渲染错误:', err));
+                }
+            }
+            
+            // 应用显示模式
+            applyMode(mode) {
+                const editorContainer = document.querySelector('.editor-container');
+                const noteContent = document.getElementById('noteContent');
+                const notePreview = document.getElementById('notePreview');
+                
+                // 重置所有模式按钮状态
+                document.querySelectorAll('.mode-btn').forEach(btn => {
+                    btn.classList.remove('active');
+                });
+                
+                // 根据模式设置界面
+                switch(mode) {
+                    case 'text':
+                        noteContent.style.display = 'block';
+                        notePreview.style.display = 'none';
+                        editorContainer.style.flexDirection = 'column';
+                        noteContent.style.flex = '1';
+                        document.getElementById('modeText').classList.add('active');
+                        break;
+                        
+                    case 'preview':
+                        noteContent.style.display = 'none';
+                        notePreview.style.display = 'block';
+                        editorContainer.style.flexDirection = 'column';
+                        notePreview.style.flex = '1';
+                        document.getElementById('modePreview').classList.add('active');
+                        break;
+                        
+                    case 'split':
+                    default:
+                        noteContent.style.display = 'block';
+                        notePreview.style.display = 'block';
+                        editorContainer.style.flexDirection = 'row';
+                        noteContent.style.flex = '1';
+                        notePreview.style.flex = '1';
+                        document.getElementById('modeSplit').classList.add('active');
+                        break;
+                }
+                
+                this.currentMode = mode;
+                // 更新预览
+                this.updatePreview();
+            }
+            
+            // 切换主题
+            toggleTheme() {
+                this.isDarkMode = !this.isDarkMode;
+                if (this.isDarkMode) {
+                    document.body.classList.add('dark-mode');
+                    document.getElementById('themeToggle').textContent = '☀️';
+                } else {
+                    document.body.classList.remove('dark-mode');
+                    document.getElementById('themeToggle').textContent = '🌓';
+                }
             }
             
             // 设置事件监听器
@@ -827,9 +966,8 @@
                     
                     try {
                         await this.loginUser(email, password);
-                        this.showAppInterface();
                     } catch (error) {
-                        alert(error.message);
+                        console.error('登录失败:', error);
                     }
                 });
                 
@@ -843,16 +981,9 @@
                     
                     try {
                         await this.registerUser(name, email, password);
-                        this.showAppInterface();
                     } catch (error) {
-                        alert(error.message);
+                        console.error('注册失败:', error);
                     }
-                });
-                
-                // 访客登录
-                document.getElementById('guestLogin').addEventListener('click', (e) => {
-                    e.preventDefault();
-                    this.guestLogin();
                 });
                 
                 // 退出登录
@@ -860,29 +991,6 @@
                     this.logout();
                 });
                 
-                // 导出笔记
-                document.getElementById('exportBtn').addEventListener('click', () => {
-                    this.exportNotes();
-                });
-                
-                // 导入笔记
-                document.getElementById('importBtn').addEventListener('click', () => {
-                    document.getElementById('importFile').click();
-                });
-                
-                document.getElementById('importFile').addEventListener('change', (e) => {
-                    if (e.target.files.length > 0) {
-                        this.importNotes(e.target.files[0]);
-                        e.target.value = ''; // 重置文件输入
-                    }
-                });
-                
-                // 其他事件监听器（与之前版本相同）
-                this.setupAppEventListeners();
-            }
-            
-            // 设置应用事件监听器
-            setupAppEventListeners() {
                 // 新建笔记按钮
                 document.getElementById('newNoteBtn').addEventListener('click', () => {
                     this.createNote();
@@ -898,8 +1006,39 @@
                 });
                 
                 // 保存笔记按钮
-                document.getElementById('saveNoteBtn').addEventListener('click', () => {
-                    this.saveCurrentNote();
+                document.getElementById('saveNoteBtn').addEventListener('click', async () => {
+                    const title = document.getElementById('noteTitle').value.trim();
+                    const content = document.getElementById('noteContent').value;
+                    
+                    if (!title && !content) {
+                        alert('笔记标题和内容不能同时为空');
+                        return;
+                    }
+                    
+                    try {
+                        if (this.currentNoteId) {
+                            await this.saveNote({
+                                id: this.currentNoteId,
+                                title: title || '无标题笔记',
+                                content: content
+                            });
+                        } else {
+                            const savedNote = await this.saveNote({
+                                title: title || '无标题笔记',
+                                content: content
+                            });
+                            
+                            if (savedNote) {
+                                this.notes.unshift(savedNote);
+                                this.currentNoteId = savedNote.id;
+                                this.updateNotesList();
+                            }
+                        }
+                        
+                        alert('笔记已保存！');
+                    } catch (error) {
+                        console.error('保存失败:', error);
+                    }
                 });
                 
                 // 搜索框
@@ -907,24 +1046,9 @@
                     this.updateNotesList();
                 });
                 
-                // 内容输入时实时更新预览和检查修改
+                // 内容输入时实时更新预览
                 document.getElementById('noteContent').addEventListener('input', () => {
                     this.updatePreview();
-                    this.checkForModifications();
-                    
-                    // 自动提取第一行作为标题
-                    const content = document.getElementById('noteContent').value;
-                    const titleInput = document.getElementById('noteTitle');
-                    
-                    if (content.trim() && (!titleInput.value || titleInput.value === '新笔记' || titleInput.value === '无标题笔记')) {
-                        titleInput.value = this.extractTitleFromContent(content);
-                        this.checkForModifications();
-                    }
-                });
-                
-                // 标题输入时检查修改
-                document.getElementById('noteTitle').addEventListener('input', () => {
-                    this.checkForModifications();
                 });
                 
                 // 模式切换按钮
@@ -944,61 +1068,12 @@
                 document.getElementById('themeToggle').addEventListener('click', () => {
                     this.toggleTheme();
                 });
-                
-                // 页面离开前提示保存
-                window.addEventListener('beforeunload', (e) => {
-                    if (this.isModified) {
-                        e.preventDefault();
-                        e.returnValue = '您有未保存的修改，确定要离开吗？';
-                    }
-                });
             }
-            
-            // 以下是之前版本的核心功能方法（保持不变）
-            // 为了简洁，这里省略了重复的方法实现
-            // 实际使用时，需要将之前版本的所有方法复制到这里
-            
-            createNote() {
-                // 检查当前笔记是否有未保存的修改
-                if (this.isModified && this.currentNoteId) {
-                    if (!confirm('当前笔记有未保存的修改，是否先保存？')) {
-                        return;
-                    }
-                    this.saveCurrentNote();
-                }
-                
-                const newNote = {
-                    id: Date.now().toString(),
-                    title: '新笔记',
-                    content: '',
-                    createdAt: new Date().toISOString(),
-                    updatedAt: new Date().toISOString()
-                };
-                
-                this.notes.unshift(newNote);
-                this.currentNoteId = newNote.id;
-                this.isModified = false;
-                this.originalContent = '';
-                this.originalTitle = '';
-                this.updateModifiedIndicator();
-                this.saveNotes();
-                this.updateNotesList();
-                this.displayNote(newNote.id);
-                
-                // 聚焦到标题输入框
-                setTimeout(() => {
-                    document.getElementById('noteTitle').focus();
-                }, 100);
-            }
-            
-            // 其他方法（updateNote, deleteNote, displayNote, saveCurrentNote等）
-            // 需要从之前版本复制过来
-            
         }
 
         // 初始化应用
         document.addEventListener('DOMContentLoaded', () => {
-            window.lanoPlusApp = new LanoPlusCloud();
+            window.lanoPlusApp = new LanoPlusNotes();
         });
     </script>
 </body>
