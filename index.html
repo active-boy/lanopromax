@@ -211,7 +211,7 @@
         
         .note-item:hover {
             background: rgba(0, 0, 0, 0.1);
-            transform: translateX(3px);
+            transform: translateX(5px);
         }
         
         .note-item.active {
@@ -344,53 +344,6 @@
             font-size: 1.1rem;
         }
         
-        .guest-option {
-            text-align: center;
-            margin-top: 20px;
-            padding: 15px;
-            border-top: 1px solid var(--border-color);
-        }
-        
-        .guest-btn {
-            background: transparent;
-            border: 1px solid var(--primary-color);
-            color: var(--primary-color);
-            padding: 10px 20px;
-            border-radius: 5px;
-            cursor: pointer;
-            font-weight: 600;
-            transition: all 0.3s;
-            width: 100%;
-            margin-top: 10px;
-        }
-        
-        .guest-btn:hover {
-            background: var(--primary-color);
-            color: white;
-        }
-        
-        .storage-info {
-            font-size: 0.8rem;
-            color: #888;
-            margin-top: 10px;
-            text-align: center;
-        }
-        
-        .mode-indicator {
-            display: inline-block;
-            padding: 2px 8px;
-            background: var(--success-color);
-            color: white;
-            border-radius: 10px;
-            font-size: 0.7rem;
-            margin-left: 10px;
-            vertical-align: middle;
-        }
-        
-        .mode-indicator.local {
-            background: var(--secondary-color);
-        }
-        
         .search-box {
             width: 100%;
             padding: 10px 15px;
@@ -446,6 +399,41 @@
             font-size: 0.9rem;
         }
         
+        .status-message {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 10px 15px;
+            background: #4caf50;
+            color: white;
+            border-radius: 4px;
+            z-index: 1000;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        }
+        
+        .status-message.error {
+            background: #f44336;
+        }
+        
+        .status-message.info {
+            background: #2196f3;
+        }
+        
+        .status-message.warning {
+            background: #ff9800;
+        }
+        
+        .mode-indicator {
+            display: inline-block;
+            padding: 2px 8px;
+            background: var(--success-color);
+            color: white;
+            border-radius: 10px;
+            font-size: 0.7rem;
+            margin-left: 10px;
+            vertical-align: middle;
+        }
+        
         @media (max-width: 768px) {
             .app-container {
                 flex-direction: column;
@@ -479,8 +467,8 @@
     <div id="authInterface" class="auth-container">
         <div class="auth-box">
             <div style="text-align: center; margin-bottom: 20px;">
-                <h2 style="color: var(--primary-color);">Lano+ 笔记应用</h2>
-                <p>选择您的使用方式</p>
+                <h2 style="color: var(--primary-color);">Lano+ 云端笔记</h2>
+                <p>登录或注册以开始使用</p>
             </div>
             
             <div class="auth-tabs">
@@ -515,15 +503,6 @@
                 </div>
                 <button type="submit" class="btn btn-primary" style="width: 100%;">注册</button>
             </form>
-            
-            <!-- 免登录选项 -->
-            <div class="guest-option">
-                <p>或</p>
-                <button id="guestModeBtn" class="guest-btn">免登录使用（本地存储）</button>
-                <div class="storage-info">
-                    <p>数据仅保存在当前设备，不会同步到云端</p>
-                </div>
-            </div>
         </div>
     </div>
     
@@ -618,7 +597,7 @@
         const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im5vanFldG91c25vcWhoeHBkbWhmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjM5ODIzMjQsImV4cCI6MjA3OTU1ODMyNH0.7BxwiQ5n-v19dp-tgkrH9mJuzqSno_b975l7VqvNOs8';
         const supabase = window.supabase.createClient(supabaseUrl, supabaseKey);
         
-        // 笔记管理类
+        // 笔记管理类 - 纯云端版本
         class LanoPlusNotes {
             constructor() {
                 this.notes = [];
@@ -626,66 +605,19 @@
                 this.currentMode = 'split';
                 this.isDarkMode = false;
                 this.currentUser = null;
-                this.storageMode = 'local'; // 'local' 或 'cloud'
-                this.isGuestMode = false;
+                this.isModified = false;
+                this.originalContent = '';
+                this.originalTitle = '';
                 
                 this.init();
             }
             
             // 初始化应用
             async init() {
-                // 检查是否有保存的存储模式偏好
-                const savedMode = localStorage.getItem('lanoStorageMode');
-                if (savedMode === 'local') {
-                    // 如果用户之前选择过本地模式，自动进入本地模式
-                    this.enableLocalMode();
-                } else {
-                    // 否则检查云端登录状态
-                    await this.checkAuthStatus();
-                }
-                
+                await this.checkAuthStatus();
                 this.setupEventListeners();
                 this.updateNotesList();
                 this.applyMode(this.currentMode);
-            }
-            
-            // 启用本地存储模式
-            enableLocalMode() {
-                this.storageMode = 'local';
-                this.isGuestMode = true;
-                this.currentUser = {
-                    id: 'guest_' + Date.now(),
-                    name: '本地用户',
-                    email: 'local@example.com'
-                };
-                
-                // 保存存储模式偏好
-                localStorage.setItem('lanoStorageMode', 'local');
-                
-                this.showAppInterface();
-                this.loadNotes();
-                this.updateStorageIndicator();
-            }
-            
-            // 启用云端存储模式
-            enableCloudMode() {
-                this.storageMode = 'cloud';
-                this.isGuestMode = false;
-                localStorage.setItem('lanoStorageMode', 'cloud');
-                this.updateStorageIndicator();
-            }
-            
-            // 更新存储模式指示器
-            updateStorageIndicator() {
-                const userNameElement = document.getElementById('userName');
-                if (userNameElement) {
-                    if (this.storageMode === 'local') {
-                        userNameElement.innerHTML = '本地用户 <span class="mode-indicator local">本地模式</span>';
-                    } else {
-                        userNameElement.innerHTML = (this.currentUser?.user_metadata?.name || '用户') + 
-                                                  '<span class="mode-indicator">云端同步</span>';
-                    }
-                }
             }
             
             // 检查认证状态
@@ -694,7 +626,6 @@
                 
                 if (session) {
                     this.currentUser = session.user;
-                    this.enableCloudMode();
                     this.showAppInterface();
                     await this.loadNotes();
                 } else {
@@ -705,7 +636,6 @@
                 supabase.auth.onAuthStateChange((event, session) => {
                     if (event === 'SIGNED_IN' && session) {
                         this.currentUser = session.user;
-                        this.enableCloudMode();
                         this.showAppInterface();
                         this.loadNotes();
                     } else if (event === 'SIGNED_OUT') {
@@ -714,7 +644,8 @@
                     }
                 });
             }
-// 显示认证界面
+            
+            // 显示认证界面
             showAuthInterface() {
                 document.getElementById('authInterface').style.display = 'flex';
                 document.getElementById('appInterface').style.display = 'none';
@@ -725,7 +656,6 @@
                 document.getElementById('authInterface').style.display = 'none';
                 document.getElementById('appInterface').style.display = 'block';
                 this.updateUserInfo();
-                this.updateStorageIndicator();
             }
             
             // 更新用户信息显示
@@ -734,14 +664,9 @@
                     const avatar = document.getElementById('userAvatar');
                     const name = document.getElementById('userName');
                     
-                    if (this.storageMode === 'local') {
-                        avatar.textContent = 'L';
-                        name.innerHTML = '本地用户 <span class="mode-indicator local">本地模式</span>';
-                    } else {
-                        avatar.textContent = this.currentUser.user_metadata?.name?.charAt(0) || 'U';
-                        name.innerHTML = (this.currentUser.user_metadata?.name || '用户') + 
-                                        '<span class="mode-indicator">云端同步</span>';
-                    }
+                    avatar.textContent = this.currentUser.user_metadata?.name?.charAt(0) || 'U';
+                    name.innerHTML = (this.currentUser.user_metadata?.name || '用户') + 
+                                  '<span class="mode-indicator">云端同步</span>';
                 }
             }
             
@@ -761,14 +686,13 @@
                     if (error) throw error;
                     
                     if (data.user) {
-                        alert('注册成功！请检查您的邮箱验证账户。');
+                        this.showMessage('注册成功！请检查您的邮箱验证账户。', 'success');
                         this.currentUser = data.user;
-                        this.enableCloudMode();
                         this.showAppInterface();
                         return data.user;
                     }
                 } catch (error) {
-                    alert(`注册失败: ${error.message}`);
+                    this.showMessage(`注册失败: ${error.message}`, 'error');
                     throw error;
                 }
             }
@@ -784,155 +708,112 @@
                     if (error) throw error;
                     
                     this.currentUser = data.user;
-                    this.enableCloudMode();
                     this.showAppInterface();
                     await this.loadNotes();
                     
                     return data.user;
                 } catch (error) {
-                    alert(`登录失败: ${error.message}`);
+                    this.showMessage(`登录失败: ${error.message}`, 'error');
                     throw error;
                 }
             }
             
             // 退出登录
             async logout() {
-                if (this.storageMode === 'local') {
-                    // 本地模式退出
-                    if (confirm('退出本地模式将清除所有本地数据。确定要退出吗？')) {
-                        localStorage.removeItem('lanoStorageMode');
-                        localStorage.removeItem('lanoLocalNotes');
-                        this.currentUser = null;
-                        this.notes = [];
-                        this.showAuthInterface();
-                    }
-                } else {
-                    // 云端模式退出
-                    try {
-                        const { error } = await supabase.auth.signOut();
-                        if (error) throw error;
-                        
-                        this.currentUser = null;
-                        this.notes = [];
-                        this.showAuthInterface();
-                    } catch (error) {
-                        alert(`退出失败: ${error.message}`);
-                    }
+                try {
+                    const { error } = await supabase.auth.signOut();
+                    if (error) throw error;
+                    
+                    this.currentUser = null;
+                    this.notes = [];
+                    this.showAuthInterface();
+                } catch (error) {
+                    this.showMessage(`退出失败: ${error.message}`, 'error');
                 }
             }
             
-            // 从存储加载笔记
+            // 从云端加载笔记
             async loadNotes() {
-                if (this.storageMode === 'local') {
-                    // 本地存储
-                    const savedNotes = localStorage.getItem('lanoLocalNotes');
-                    if (savedNotes) {
-                        try {
-                            this.notes = JSON.parse(savedNotes);
-                        } catch (e) {
-                            console.error('加载本地笔记失败:', e);
-                            this.notes = [];
-                        }
-                    } else {
-                        this.notes = [];
-                    }
-                } else {
-                    // 云端存储
-                    if (!this.currentUser) return;
+                if (!this.currentUser) return;
+                
+                try {
+                    const { data, error } = await supabase
+                        .from('notes')
+                        .select('*')
+                        .eq('user_id', this.currentUser.id)
+                        .order('updated_at', { ascending: false });
                     
-                    try {
-                        const { data, error } = await supabase
-                            .from('notes')
-                            .select('*')
-                            .eq('user_id', this.currentUser.id)
-                            .order('updated_at', { ascending: false });
-                        
-                        if (error) throw error;
-                        
-                        this.notes = data || [];
-                    } catch (error) {
-                        console.error('加载云端笔记失败:', error);
-                        this.notes = [];
-                    }
+                    if (error) throw error;
+                    
+                    this.notes = data || [];
+                    this.updateNotesList();
+                } catch (error) {
+                    console.error('加载笔记失败:', error);
+                    this.showMessage('加载笔记失败，请检查网络连接', 'error');
+                    this.notes = [];
+                }
+            }
+            
+            // 保存笔记到云端
+            async saveNote(note) {
+                if (!this.currentUser) {
+                    this.showMessage('请先登录以保存笔记', 'error');
+                    return null;
                 }
                 
-                this.updateNotesList();
-            }
-            
-            // 保存笔记到存储
-            async saveNote(note) {
-                if (this.storageMode === 'local') {
-                    // 本地存储
+                try {
                     if (note.id) {
                         // 更新现有笔记
-                        const noteIndex = this.notes.findIndex(n => n.id === note.id);
-                        if (noteIndex !== -1) {
-                            this.notes[noteIndex] = {
-                                ...this.notes[noteIndex],
+                        const { data, error } = await supabase
+                            .from('notes')
+                            .update({
                                 title: note.title,
                                 content: note.content,
                                 updated_at: new Date().toISOString()
-                            };
-                        }
+                            })
+                            .eq('id', note.id)
+                            .select();
+                        
+                        if (error) throw error;
+                        return data[0];
                     } else {
                         // 创建新笔记
-                        const newNote = {
-                            id: 'local_' + Date.now(),
-                            title: note.title,
-                            content: note.content,
-                            created_at: new Date().toISOString(),
-                            updated_at: new Date().toISOString()
-                        };
-                        this.notes.unshift(newNote);
+                        const { data, error } = await supabase
+                            .from('notes')
+                            .insert({
+                                title: note.title,
+                                content: note.content,
+                                user_id: this.currentUser.id,
+                                created_at: new Date().toISOString(),
+                                updated_at: new Date().toISOString()
+                            })
+                            .select();
+                        
+                        if (error) throw error;
+                        return data[0];
                     }
-                    
-                    // 保存到本地存储
-                    localStorage.setItem('lanoLocalNotes', JSON.stringify(this.notes));
-                    
-                    return this.notes.find(n => n.id === (note.id || this.notes[0].id));
-                } else {
-                    // 云端存储
-                    if (!this.currentUser) return null;
-                    
-                    try {
-                        if (note.id) {
-                            const { data, error } = await supabase
-                                .from('notes')
-                                .update({
-                                    title: note.title,
-                                    content: note.content,
-                                    updated_at: new Date().toISOString()
-                                })
-                                .eq('id', note.id)
-                                .select();
-                            
-                            if (error) throw error;
-                            return data[0];
-                        } else {
-                            const { data, error } = await supabase
-                                .from('notes')
-                                .insert({
-                                    title: note.title,
-                                    content: note.content,
-                                    user_id: this.currentUser.id,
-                                    created_at: new Date().toISOString(),
-                                    updated_at: new Date().toISOString()
-                                })
-                                .select();
-                            
-                            if (error) throw error;
-                            return data[0];
-                        }
-                    } catch (error) {
-                        console.error('保存笔记失败:', error);
-                        alert('保存失败，请检查网络连接');
-                        throw error;
-                    }
+                } catch (error) {
+                    console.error('保存笔记失败:', error);
+                    this.showMessage('保存失败，请检查网络连接', 'error');
+                    throw error;
                 }
             }
             
             // 创建新笔记
             async createNote() {
+                if (!this.currentUser) {
+                    this.showMessage('请先登录以创建笔记', 'error');
+                    return;
+                }
+                
+                // 检查当前笔记是否有未保存的修改
+                if (this.isModified && this.currentNoteId) {
+                    if (!confirm('当前笔记有未保存的修改，是否先保存？')) {
+                        return;
+                    }
+                    await this.saveCurrentNote();
+                }
+                
                 const newNote = {
                     id: null,
                     title: '新笔记',
@@ -944,12 +825,19 @@
                 try {
                     const savedNote = await this.saveNote(newNote);
                     if (savedNote) {
-                        if (!newNote.id) {
-                            this.notes.unshift(savedNote);
-                        }
+                        this.notes.unshift(savedNote);
                         this.currentNoteId = savedNote.id;
+                        this.isModified = false;
+                        this.originalContent = '';
+                        this.originalTitle = '';
+                        this.updateModifiedIndicator();
                         this.updateNotesList();
                         this.displayNote(savedNote.id);
+                        
+                        // 聚焦到标题输入框
+                        setTimeout(() => {
+                            document.getElementById('noteTitle').focus();
+                        }, 100);
                     }
                 } catch (error) {
                     console.error('创建笔记失败:', error);
@@ -958,36 +846,30 @@
             
             // 删除笔记
             async deleteNote(id) {
+                if (!this.currentUser) {
+                    this.showMessage('请先登录以删除笔记', 'error');
+                    return;
+                }
+                
                 if (confirm('确定要删除此笔记吗？此操作不可撤销。')) {
-                    if (this.storageMode === 'local') {
-                        // 本地删除
-                        this.notes = this.notes.filter(note => note.id !== id);
-                        localStorage.setItem('lanoLocalNotes', JSON.stringify(this.notes));
+                    try {
+                        const { error } = await supabase
+                            .from('notes')
+                            .delete()
+                            .eq('id', id);
                         
+                        if (error) throw error;
+                        
+                        this.notes = this.notes.filter(note => note.id !== id);
                         if (this.currentNoteId === id) {
                             this.currentNoteId = null;
                             this.clearEditor();
                         }
                         this.updateNotesList();
-                    } else {
-                        // 云端删除
-                        try {
-                            const { error } = await supabase
-                                .from('notes')
-                                .delete()
-                                .eq('id', id);
-                            
-                            if (error) throw error;
-                            
-                            this.notes = this.notes.filter(note => note.id !== id);
-                            if (this.currentNoteId === id) {
-                                this.currentNoteId = null;
-                                this.clearEditor();
-                            }
-                            this.updateNotesList();
-                        } catch (error) {
-                            alert('删除失败，请重试');
-                        }
+                        this.showMessage('笔记已删除', 'success');
+                    } catch (error) {
+                        console.error('删除笔记失败:', error);
+                        this.showMessage('删除失败，请重试', 'error');
                     }
                 }
             }
@@ -999,6 +881,10 @@
                     document.getElementById('noteTitle').value = note.title;
                     document.getElementById('noteContent').value = note.content;
                     this.currentNoteId = id;
+                    this.isModified = false;
+                    this.originalContent = note.content;
+                    this.originalTitle = note.title;
+                    this.updateModifiedIndicator();
                     
                     // 更新笔记列表中的活动状态
                     document.querySelectorAll('.note-item').forEach(item => {
@@ -1012,11 +898,74 @@
                 }
             }
             
+            // 保存当前笔记
+            async saveCurrentNote() {
+                if (!this.currentNoteId) {
+                    this.showMessage('没有可保存的笔记', 'error');
+                    return false;
+                }
+                
+                const title = document.getElementById('noteTitle').value.trim();
+                const content = document.getElementById('noteContent').value;
+                
+                if (!title && !content) {
+                    this.showMessage('笔记标题和内容不能同时为空', 'error');
+                    return false;
+                }
+                
+                try {
+                    await this.saveNote({
+                        id: this.currentNoteId,
+                        title: title || '无标题笔记',
+                        content: content
+                    });
+                    
+                    this.isModified = false;
+                    this.originalContent = content;
+                    this.originalTitle = title;
+                    this.updateModifiedIndicator();
+                    this.updateNotesList();
+                    this.showMessage('笔记已保存！', 'success');
+                    
+                    return true;
+                } catch (error) {
+                    console.error('保存失败:', error);
+                    return false;
+                }
+            }
+            
+            // 检查内容是否有修改
+            checkForModifications() {
+                if (!this.currentNoteId) return;
+                
+                const currentTitle = document.getElementById('noteTitle').value;
+                const currentContent = document.getElementById('noteContent').value;
+                
+                this.isModified = (currentTitle !== this.originalTitle || currentContent !== this.originalContent);
+                this.updateModifiedIndicator();
+            }
+            
+            // 更新修改指示器
+            updateModifiedIndicator() {
+                const saveBtn = document.getElementById('saveNoteBtn');
+                if (this.isModified) {
+                    saveBtn.style.background = '#ff9800';
+                    saveBtn.textContent = '保存*';
+                } else {
+                    saveBtn.style.background = '';
+                    saveBtn.textContent = '保存';
+                }
+            }
+            
             // 清空编辑器
             clearEditor() {
                 document.getElementById('noteTitle').value = '';
                 document.getElementById('noteContent').value = '';
                 this.currentNoteId = null;
+                this.isModified = false;
+                this.originalContent = '';
+                this.originalTitle = '';
+                this.updateModifiedIndicator();
                 document.getElementById('notePreview').innerHTML = '<div class="empty-state"><h3>预览区域</h3><p>输入内容后，将在这里实时预览</p></div>';
                 
                 // 移除所有活动状态
@@ -1079,7 +1028,18 @@
                 };
                 return text.replace(/[&<>"']/g, function(m) { return map[m]; });
             }
-// 更新预览区域
+            
+            // 从内容中提取第一行作为标题
+            extractTitleFromContent(content) {
+                const firstLine = content.split('\n')[0].trim();
+                if (firstLine && firstLine.length > 0) {
+                    // 移除可能存在的Markdown标题标记
+                    return firstLine.replace(/^#+\s*/, '');
+                }
+                return '无标题笔记';
+            }
+            
+            // 更新预览区域
             updatePreview() {
                 const content = document.getElementById('noteContent').value;
                 const previewElement = document.getElementById('notePreview');
@@ -1152,11 +1112,34 @@
                 this.isDarkMode = !this.isDarkMode;
                 if (this.isDarkMode) {
                     document.body.classList.add('dark-mode');
-                    document.getElementById('themeToggle').textContent = '☀️';
+                    document.getElementById('themeToggle').textContent = ☀️';
                 } else {
                     document.body.classList.remove('dark-mode');
                     document.getElementById('themeToggle').textContent = '🌓';
                 }
+            }
+            
+            // 显示消息提示
+            showMessage(message, type = 'info') {
+                // 移除现有提示
+                const existingMessage = document.querySelector('.status-message');
+                if (existingMessage) {
+                    existingMessage.remove();
+                }
+                
+                // 创建新提示
+                const messageDiv = document.createElement('div');
+                messageDiv.className = `status-message ${type}`;
+                messageDiv.textContent = message;
+                
+                document.body.appendChild(messageDiv);
+                
+                // 3秒后自动消失
+                setTimeout(() => {
+                    if (messageDiv.parentNode) {
+                        messageDiv.remove();
+                    }
+                }, 3000);
             }
             
             // 设置事件监听器
@@ -1204,12 +1187,7 @@
                     }
                 });
                 
-                // 免登录按钮
-                document.getElementById('guestModeBtn').addEventListener('click', () => {
-                    this.enableLocalMode();
-                });
-                
-                // 退出登录
+                // 退出登录按钮
                 document.getElementById('logoutBtn').addEventListener('click', () => {
                     this.logout();
                 });
@@ -1224,44 +1202,13 @@
                     if (this.currentNoteId) {
                         this.deleteNote(this.currentNoteId);
                     } else {
-                        alert('请先选择要删除的笔记');
+                        this.showMessage('请先选择要删除的笔记', 'error');
                     }
                 });
                 
                 // 保存笔记按钮
-                document.getElementById('saveNoteBtn').addEventListener('click', async () => {
-                    const title = document.getElementById('noteTitle').value.trim();
-                    const content = document.getElementById('noteContent').value;
-                    
-                    if (!title && !content) {
-                        alert('笔记标题和内容不能同时为空');
-                        return;
-                    }
-                    
-                    try {
-                        if (this.currentNoteId) {
-                            await this.saveNote({
-                                id: this.currentNoteId,
-                                title: title || '无标题笔记',
-                                content: content
-                            });
-                        } else {
-                            const savedNote = await this.saveNote({
-                                title: title || '无标题笔记',
-                                content: content
-                            });
-                            
-                            if (savedNote) {
-                                this.notes.unshift(savedNote);
-                                this.currentNoteId = savedNote.id;
-                                this.updateNotesList();
-                            }
-                        }
-                        
-                        alert('笔记已保存！');
-                    } catch (error) {
-                        console.error('保存失败:', error);
-                    }
+                document.getElementById('saveNoteBtn').addEventListener('click', () => {
+                    this.saveCurrentNote();
                 });
                 
                 // 搜索框
@@ -1269,9 +1216,24 @@
                     this.updateNotesList();
                 });
                 
-                // 内容输入时实时更新预览
+                // 内容输入时实时更新预览和检查修改
                 document.getElementById('noteContent').addEventListener('input', () => {
                     this.updatePreview();
+                    this.checkForModifications();
+                    
+                    // 自动提取第一行作为标题
+                    const content = document.getElementById('noteContent').value;
+                    const titleInput = document.getElementById('noteTitle');
+                    
+                    if (content.trim() && (!titleInput.value || titleInput.value === '新笔记' || titleInput.value === '无标题笔记')) {
+                        titleInput.value = this.extractTitleFromContent(content);
+                        this.checkForModifications();
+                    }
+                });
+                
+                // 标题输入时检查修改
+                document.getElementById('noteTitle').addEventListener('input', () => {
+                    this.checkForModifications();
                 });
                 
                 // 模式切换按钮
@@ -1294,15 +1256,9 @@
                 
                 // 页面离开前提示保存
                 window.addEventListener('beforeunload', (e) => {
-                    if (this.currentNoteId) {
-                        const title = document.getElementById('noteTitle').value;
-                        const content = document.getElementById('noteContent').value;
-                        const currentNote = this.notes.find(note => note.id === this.currentNoteId);
-                        
-                        if (currentNote && (title !== currentNote.title || content !== currentNote.content)) {
-                            e.preventDefault();
-                            e.returnValue = '您有未保存的修改，确定要离开吗？';
-                        }
+                    if (this.isModified) {
+                        e.preventDefault();
+                        e.returnValue = '您有未保存的修改，确定要离开吗？';
                     }
                 });
             }
